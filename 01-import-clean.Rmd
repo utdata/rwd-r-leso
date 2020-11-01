@@ -1,0 +1,70 @@
+---
+title: "LESO data wrangling"
+output:
+  html_document:
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    df_print: paged
+knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
+---
+
+This notebook processes [data](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/PublicInformation/) by the Defense Logistics Agency about military surplus transfers to local law enforcement through the Law Enforcement Support Office (LESO) or [LESO Program](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/).
+
+The data is updated quarterly. As of this date, the file name is linked from the headline "ALASKA - WYOMING AND US TERRITORIES".
+
+The spreadsheet as a a sheet for each state. This notebook puts all the sheets together into a single dataset for easier analysis.
+
+```{r setup, echo=T, results='hide', message=F, warning=F}
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+## Import
+
+```{r import}
+# set path to data
+## change name to update to new file
+path <- "data-raw/DISP_AllStatesAndTerritories_09302020.xlsx"
+
+# import and combine sheets
+leso <- path %>%
+  excel_sheets() %>%
+  map_df(~ read_excel(path = path, sheet = .x), .id = "sheet") %>% 
+  clean_names()
+
+# peek at names
+leso %>% names()
+# peek at df
+leso %>% head()
+```
+
+## Texas
+
+Filter for Texas agencies
+
+```{r texas}
+tx <- leso %>% 
+  filter(state == "TX")
+
+```
+
+## Write files
+
+Write files for export for future notebooks or other reasons.
+
+```{r export}
+
+# write data to csv
+leso %>% 
+  write_csv("data-processed/leso.csv")
+
+leso %>% 
+  write_rds("data-processed/leso.rds")
+
+# klaxon on complete
+beepr::beep(4)
+```
+
