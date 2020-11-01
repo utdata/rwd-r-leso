@@ -1,0 +1,136 @@
+---
+title: "LESO Texas and Austin"
+output:
+  html_document:
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    df_print: paged
+knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
+---
+
+## Setup
+
+```{r setup, echo=T, results='hide', message=F, warning=F}
+library(tidyverse)
+```
+
+## Import
+
+```{r import}
+leso <- read_rds("data-processed/leso.rds")
+austin_msa_agencies <- read_csv("data-raw/austin_msa_agencies.csv")
+
+cols <- c(
+  "station_name_lea",
+  "item_name",
+  "quantity",
+  "ui",
+  "acquisition_value",
+  "ship_date",
+  "station_type"
+  )
+```
+
+## Filter to TX
+
+```{r tx}
+tx <- leso %>% 
+  filter(state == "TX")
+```
+
+## Central Texas
+
+This is a list of agencies from utdata/rwd-police-agencies for comparison.
+
+
+```{r show_agencies}
+austin_msa_agencies %>% 
+  arrange(agency)
+```
+
+
+```{r stations}
+tx %>% 
+  group_by(station_name_lea) %>%
+  count()
+```
+
+### Make a list of Austin MSA agencies
+
+This is a very suspect list because it comes from looking through the available agencies "by hand" from the Sept 2020 data.
+
+> Not yet checked to list above
+
+```{r austinmsa}
+
+aus_msa_list <- c(
+  "AUSTIN POLICE DEPT",
+  "BASTROP COUNTY SHERIFF'S OFFICE",
+  "BASTROP POLICE DEPT",
+  "BEE CAVE POLICE DEPT",
+  "BUDA POLICE DEPT",
+  "CALDWELL COUNTY SHERIFFS OFFICE",
+  "CEDAR PARK POLICE DEPT",
+  "ELGIN POLICE DEPARTMENT",
+  "GEORGETOWN POLICE DEPT",
+  "HAYS CO CONSTABLE PRECINCT 4",
+  "HAYS COUNTY SHERIFFS OFFICE",
+  "HUTTO POLICE DEPT",
+  "KYLE POLICE DEPT",
+  "LAGO VISTA POLICE DEPT",
+  "LEANDER POLICE DEPT",
+  "LULING POLICE DEPT",
+  "MANOR POLICE DEPT",
+  "PFLUGERVILLE POLICE DEPT",
+  "SAN MARCOS POLICE DEPT",
+  "TRAVIS COUNTY SHERIFFS OFFICE",
+  "NIV OF TEXAS SYSTEM POLICE HI_ED",
+  "WILLIAMSON COUNTY SHERIFF'S OFFICE"
+)
+
+aus_msa <- tx %>% 
+  filter(station_name_lea %in% aus_msa_list)
+```
+
+### Austin MSA
+
+```{r}
+aus_msa %>% 
+  group_by(station_name_lea) %>% 
+  summarize(
+    cnt = n(),
+    value = sum(acquisition_value)
+  ) %>% 
+  arrange(value %>% desc())
+```
+
+### Williamson County Sheriff
+
+```{r wilco}
+wilco <- aus_msa %>% 
+  filter(station_name_lea == "WILLIAMSON COUNTY SHERIFF'S OFFICE")
+
+wilco %>% 
+  select(cols) %>% 
+  group_by(item_name) %>% 
+  summarize(
+    cnt = sum(quantity),
+    val = sum(acquisition_value)
+    ) %>% 
+  arrange(val %>% desc())
+```
+
+```{r}
+wilco %>% 
+  filter(
+    item_name == "RIFLE,7.62 MILLIMETER"
+  ) %>% 
+  select(cols)
+```
+
+
+## Schools
+
+Look fro K-12 and HI_ED

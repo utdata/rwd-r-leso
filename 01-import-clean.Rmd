@@ -14,7 +14,7 @@ This notebook processes [data](https://www.dla.mil/DispositionServices/Offers/Re
 
 The data is updated quarterly. As of this date, the file name is linked from the headline "ALASKA - WYOMING AND US TERRITORIES".
 
-The spreadsheet as a a sheet for each state. This notebook puts all the sheets together into a single dataset for easier analysis.
+The spreadsheet has a a sheet for each state. This notebook puts all the sheets together into a single dataset for easier analysis.
 
 ```{r setup, echo=T, results='hide', message=F, warning=F}
 library(tidyverse)
