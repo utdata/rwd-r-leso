@@ -28,8 +28,7 @@ cols <- c(
   "quantity",
   "ui",
   "acquisition_value",
-  "ship_date",
-  "station_type"
+  "ship_date"
   )
 ```
 
@@ -101,9 +100,9 @@ aus_msa %>%
   group_by(station_name_lea) %>% 
   summarize(
     cnt = n(),
-    value = sum(acquisition_value)
+    total_value = sum(acquisition_value * quantity)
   ) %>% 
-  arrange(value %>% desc())
+  arrange(total_value %>% desc())
 ```
 
 ### Williamson County Sheriff
@@ -117,9 +116,9 @@ wilco %>%
   group_by(item_name) %>% 
   summarize(
     cnt = sum(quantity),
-    val = sum(acquisition_value)
+    total_value = sum(acquisition_value * quantity)
     ) %>% 
-  arrange(val %>% desc())
+  arrange(total_value %>% desc())
 ```
 
 ```{r}
@@ -130,7 +129,60 @@ wilco %>%
   select(cols)
 ```
 
+## Texas higher education
 
-## Schools
+Look for K-12 and HI_ED
 
-Look fro K-12 and HI_ED
+```{r}
+tx %>% 
+  filter(
+    str_detect(station_name_lea, "HI_ED")
+  ) %>% 
+  group_by(station_name_lea) %>% 
+  summarise(
+    cnt = sum(quantity),
+    total_value = sum(quantity * acquisition_value)
+  ) %>% 
+  arrange(total_value %>% desc())
+```
+
+## Texas local school districts
+
+```{r}
+tx %>% 
+  filter(
+    str_detect(station_name_lea, "K-12")
+  ) %>% 
+  group_by(station_name_lea) %>% 
+  summarise(
+    cnt = sum(quantity),
+    total_value = sum(quantity * acquisition_value)
+  ) %>% 
+  arrange(total_value %>% desc())
+
+```
+
+### Sprig Branch
+
+```{r}
+tx %>% 
+  filter(
+    station_name_lea == "SPRING BRANCH ISD PD K-12"
+  ) %>% 
+  group_by(item_name) %>% 
+  summarise(
+    cnt = sum(quantity),
+    total_value = sum(quantity * acquisition_value)
+  )
+```
+
+Checking pistol
+
+```{r}
+tx %>% 
+  filter(
+    station_name_lea == "SPRING BRANCH ISD PD K-12",
+    item_name == "PISTOL,CALIBER .45,AUTOMATIC"
+  ) %>% select(cols, -station_name_lea)
+```
+

@@ -1,0 +1,82 @@
+---
+title: "LESO Explore"
+output:
+  html_document:
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    df_print: paged
+knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
+---
+
+John Templon at Buzzfeed wondered why the acquisition_value was different for the same item listed in the LESO data. This explores that concept.
+
+## Setup
+
+```{r setup, echo=T, results='hide', message=F, warning=F}
+library(tidyverse)
+```
+
+## Import
+
+```{r import}
+leso <- read_rds("data-processed/leso.rds")
+
+# columns of interest
+cols <- c(
+  "station_name_lea",
+  "item_name",
+  "quantity",
+  "ui",
+  "acquisition_value",
+  "ship_date",
+  "station_type"
+  )
+```
+
+## Price differences
+
+A quick look at popular item names in the data.
+
+```{r}
+leso %>% 
+  count(item_name) %>% 
+  arrange(n %>% desc())
+```
+
+Let's look at "RIFLE,5.56 MILLIMETER". Filter for those.
+
+```{r}
+rifles <- leso %>% 
+  filter(item_name == "RIFLE,5.56 MILLIMETER")
+```
+
+Apparently rifles of different NSN (National Stock Number) can have different prices.
+
+```{r}
+rifles %>% 
+  count(nsn, acquisition_value)
+```
+
+I sent a query on 2020-12-12 to LESO to see if there is a data source for NSN. I believe further searching might reveal, but also might require a level of government access.
+
+## Demil codes
+
+There are two [Demil codes](https://www.dla.mil/HQ/LogisticsOperations/Services/FIC/DEMILCoding/DEMILCodes/) listed for each item. They relate to the level of destruction needed for each item.
+
+With the list above we could build a lookup table. Not sure if it is warranted.
+
+Looking here at how they are distributed.
+
+```{r}
+leso %>% 
+  count(demil_code)
+```
+
+```{r}
+leso %>% 
+  count(demil_ic)
+```
+
+

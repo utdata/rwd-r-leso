@@ -16,6 +16,15 @@ The data is updated quarterly. As of this date, the file name is linked from the
 
 The spreadsheet has a a sheet for each state. This notebook puts all the sheets together into a single dataset for easier analysis.
 
+> An important note: In 2020 I asked the LESO office about the `acquisition_value` measure and found that it should be *multiplied* by the `quantity`. The value is for single item.
+
+## Related data
+
+- Two values are considered [Demil Codes](https://www.dla.mil/HQ/LogisticsOperations/Services/FIC/DEMILCoding/DEMILCodes/) which note how an item must be tracked or destroyed?
+- There is also the `NSN` value, or [National Stock Number](https://www.dla.mil/AboutDLA/News/NewsArticleView/Article/1933320/what-is-a-national-stock-number/).
+
+## Setup
+
 ```{r setup, echo=T, results='hide', message=F, warning=F}
 library(tidyverse)
 library(readxl)
