@@ -10,6 +10,7 @@
 
 
 
+<meta name="date" content="2021-01-25" />
 
 <title>LESO data wrangling</title>
 
@@ -2570,6 +2571,54 @@ window.onload = function() {
   PagedTableDoc.initAll();
 };
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -2798,18 +2847,39 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">LESO data wrangling</h1>
+<h4 class="date">2021-01-25</h4>
 
 </div>
 
 
+<p>This notebook processes <a href="https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/PublicInformation/">data</a> by the Defense Logistics Agency about military surplus transfers to local law enforcement through the Law Enforcement Support Office (LESO) or <a href="https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/">LESO Program</a>.</p>
+<p>The data is updated quarterly. As of this date, the file name is linked from the headline “ALASKA - WYOMING AND US TERRITORIES”.</p>
+<p>The spreadsheet has a a sheet for each state. This notebook puts all the sheets together into a single dataset for easier analysis.</p>
+<blockquote>
+<p>An important note: In 2020 I asked the LESO office about the <code>acquisition_value</code> measure and found that it should be <em>multiplied</em> by the <code>quantity</code>. The value is for single item.</p>
+</blockquote>
+<p>In addition, I asked about why there are different prices for the same item, and received the following response on 2020-12-14:</p>
+<blockquote>
+<p>You are correct, the NSN is the National Stock Number. The primary reason a similar item has a different NSN designation is classification difference. In some cases, this could be difference in features, a frequently added component to the item, or variance in storage requirements such as the recent vaccinees that are being assigned NSNs for DLA’s major subordinate command, Troop Support. The cost information is provided by the customer when they turn the items into DLA Disposition Services. Acquisition values can vary for numerous reasons. One is the above, variance in classification differences such as modifications. As with most commodities, other factors could include variance in acquisition cost depending on the quantity procured and the year acquired.</p>
+</blockquote>
+<div id="related-data" class="section level2">
+<h2>Related data</h2>
+<ul>
+<li>Two values are considered <a href="https://www.dla.mil/HQ/LogisticsOperations/Services/FIC/DEMILCoding/DEMILCodes/">Demil Codes</a> which note how an item must be tracked or destroyed?</li>
+<li>There is also the <code>NSN</code> value, or <a href="https://www.dla.mil/AboutDLA/News/NewsArticleView/Article/1933320/what-is-a-national-stock-number/">National Stock Number</a>.</li>
+</ul>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
 <pre class="r"><code>library(tidyverse)
 library(readxl)
 library(janitor)</code></pre>
+</div>
 <div id="import" class="section level2">
 <h2>Import</h2>
 <pre class="r"><code># set path to data
 ## change name to update to new file
-path &lt;- &quot;data-raw/DISP_AllStatesAndTerritories_09302020.xlsx&quot;
+path &lt;- &quot;data-raw/DISP_AllStatesAndTerritories_12312020.xlsx&quot;
 
 # import and combine sheets
 leso &lt;- path %&gt;%
@@ -2827,9 +2897,25 @@ leso %&gt;% names()</code></pre>
 leso %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["sheet"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["station_name_lea"],"name":[3],"type":["chr"],"align":["left"]},{"label":["nsn"],"name":[4],"type":["chr"],"align":["left"]},{"label":["item_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["quantity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ui"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acquisition_value"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["demil_code"],"name":[9],"type":["chr"],"align":["left"]},{"label":["demil_ic"],"name":[10],"type":["chr"],"align":["left"]},{"label":["ship_date"],"name":[11],"type":["S3: POSIXct"],"align":["right"]},{"label":["station_type"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2355-01-553-4634","5":"MINE RESISTANT VEHICLE","6":"1","7":"Each","8":"658000","9":"C","10":"1","11":"2016-11-09","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1005-01-587-7175","5":"MOUNT,RIFLE","6":"10","7":"Each","8":"1626","9":"D","10":"1","11":"2016-09-19","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-01-411-1265","5":"SIGHT,REFLEX","6":"9","7":"Each","8":"321","9":"D","10":"1","11":"2016-09-14","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1385-01-574-4707","5":"UNMANNED VEHICLE,GROUND","6":"1","7":"Each","8":"10000","9":"Q","10":"3","11":"2017-03-28","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"6760-01-628-6105","5":"CAMERA ROBOT","6":"1","7":"Each","8":"600","9":"D","10":"7","11":"2017-02-08","12":"State"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sheet"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["station_name_lea"],"name":[3],"type":["chr"],"align":["left"]},{"label":["nsn"],"name":[4],"type":["chr"],"align":["left"]},{"label":["item_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["quantity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ui"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acquisition_value"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["demil_code"],"name":[9],"type":["chr"],"align":["left"]},{"label":["demil_ic"],"name":[10],"type":["chr"],"align":["left"]},{"label":["ship_date"],"name":[11],"type":["dttm"],"align":["right"]},{"label":["station_type"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2355-01-553-4634","5":"MINE RESISTANT VEHICLE","6":"1","7":"Each","8":"658000","9":"C","10":"1","11":"2016-11-09","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-01-411-1265","5":"SIGHT,REFLEX","6":"9","7":"Each","8":"333","9":"D","10":"1","11":"2016-09-14","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1005-01-587-7175","5":"MOUNT,RIFLE","6":"10","7":"Each","8":"1626","9":"D","10":"1","11":"2016-09-19","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1385-01-574-4707","5":"UNMANNED VEHICLE,GROUND","6":"1","7":"Each","8":"10000","9":"Q","10":"3","11":"2017-03-28","12":"State"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<pre class="r"><code># glimpse at df
+leso %&gt;% glimpse()</code></pre>
+<pre><code>## Rows: 133,949
+## Columns: 12
+## $ sheet             &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;…
+## $ state             &lt;chr&gt; &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL…
+## $ station_name_lea  &lt;chr&gt; &quot;ABBEVILLE POLICE DEPT&quot;, &quot;ABBEVILLE POLICE DEPT&quot;, &quot;…
+## $ nsn               &lt;chr&gt; &quot;2355-01-553-4634&quot;, &quot;1240-01-411-1265&quot;, &quot;2320-01-37…
+## $ item_name         &lt;chr&gt; &quot;MINE RESISTANT VEHICLE&quot;, &quot;SIGHT,REFLEX&quot;, &quot;TRUCK,UT…
+## $ quantity          &lt;dbl&gt; 1, 9, 1, 1, 10, 1, 10, 10, 1, 1, 1, 1, 10, 3, 12, 5…
+## $ ui                &lt;chr&gt; &quot;Each&quot;, &quot;Each&quot;, &quot;Each&quot;, &quot;Each&quot;, &quot;Each&quot;, &quot;Each&quot;, &quot;Ea…
+## $ acquisition_value &lt;dbl&gt; 658000.00, 333.00, 62627.00, 62627.00, 1626.00, 100…
+## $ demil_code        &lt;chr&gt; &quot;C&quot;, &quot;D&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;, &quot;Q&quot;, &quot;D&quot;, &quot;D&quot;, &quot;D&quot;, &quot;D&quot;, &quot;…
+## $ demil_ic          &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;3&quot;, &quot;1&quot;, &quot;1&quot;, NA, &quot;7&quot;, &quot;1…
+## $ ship_date         &lt;dttm&gt; 2016-11-09, 2016-09-14, 2016-09-29, 2016-09-29, 20…
+## $ station_type      &lt;chr&gt; &quot;State&quot;, &quot;State&quot;, &quot;State&quot;, &quot;State&quot;, &quot;State&quot;, &quot;State…</code></pre>
 </div>
 <div id="texas" class="section level2">
 <h2>Texas</h2>
@@ -2862,7 +2948,7 @@ beepr::beep(4)</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

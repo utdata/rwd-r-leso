@@ -1,5 +1,6 @@
 ---
 title: "LESO data wrangling"
+date: "`r Sys.Date()`"
 output:
   html_document:
     theme: flatly
@@ -42,7 +43,7 @@ library(janitor)
 ```{r import}
 # set path to data
 ## change name to update to new file
-path <- "data-raw/DISP_AllStatesAndTerritories_09302020.xlsx"
+path <- "data-raw/DISP_AllStatesAndTerritories_12312020.xlsx"
 
 # import and combine sheets
 leso <- path %>%
@@ -54,6 +55,8 @@ leso <- path %>%
 leso %>% names()
 # peek at df
 leso %>% head()
+# glimpse at df
+leso %>% glimpse()
 ```
 
 ## Texas
