@@ -24,7 +24,7 @@ leso <- read_rds("data-processed/leso.rds")
 austin_msa_agencies <- read_csv("data-raw/austin_msa_agencies.csv")
 
 cols <- c(
-  "station_name_lea",
+  "agency_name",
   "item_name",
   "quantity",
   "ui",
@@ -32,6 +32,14 @@ cols <- c(
   "ship_date"
   )
 ```
+
+## Glimpse the data
+
+
+```{r}
+leso %>% glimpse()
+```
+
 
 ## Filter to TX
 
@@ -53,7 +61,7 @@ austin_msa_agencies %>%
 
 ```{r stations}
 tx %>% 
-  group_by(station_name_lea) %>%
+  group_by(agency_name) %>%
   count()
 ```
 
@@ -91,14 +99,14 @@ aus_msa_list <- c(
 )
 
 aus_msa <- tx %>% 
-  filter(station_name_lea %in% aus_msa_list)
+  filter(agency_name %in% aus_msa_list)
 ```
 
 ### Austin MSA
 
 ```{r}
 aus_msa %>% 
-  group_by(station_name_lea) %>% 
+  group_by(agency_name) %>% 
   summarize(
     cnt = n(),
     total_value = sum(acquisition_value * quantity)
@@ -110,7 +118,7 @@ aus_msa %>%
 
 ```{r wilco}
 wilco <- aus_msa %>% 
-  filter(station_name_lea == "WILLIAMSON COUNTY SHERIFF'S OFFICE")
+  filter(agency_name == "WILLIAMSON COUNTY SHERIFF'S OFFICE")
 
 wilco %>% 
   select(cols) %>% 
@@ -137,9 +145,9 @@ Look for K-12 and HI_ED
 ```{r}
 tx %>% 
   filter(
-    str_detect(station_name_lea, "HI_ED")
+    str_detect(agency_name, "HI_ED")
   ) %>% 
-  group_by(station_name_lea) %>% 
+  group_by(agency_name) %>% 
   summarise(
     cnt = sum(quantity),
     total_value = sum(quantity * acquisition_value)
@@ -152,9 +160,9 @@ tx %>%
 ```{r}
 tx %>% 
   filter(
-    str_detect(station_name_lea, "K-12")
+    str_detect(agency_name, "K-12")
   ) %>% 
-  group_by(station_name_lea) %>% 
+  group_by(agency_name) %>% 
   summarise(
     cnt = sum(quantity),
     total_value = sum(quantity * acquisition_value)
@@ -163,12 +171,12 @@ tx %>%
 
 ```
 
-### Sprig Branch
+### Spring Branch
 
 ```{r}
 tx %>% 
   filter(
-    station_name_lea == "SPRING BRANCH ISD PD K-12"
+    agency_name == "SPRING BRANCH ISD PD K-12"
   ) %>% 
   group_by(item_name) %>% 
   summarise(
@@ -182,8 +190,8 @@ Checking pistol
 ```{r}
 tx %>% 
   filter(
-    station_name_lea == "SPRING BRANCH ISD PD K-12",
+    agency_name == "SPRING BRANCH ISD PD K-12",
     item_name == "PISTOL,CALIBER .45,AUTOMATIC"
-  ) %>% select(cols, -station_name_lea)
+  ) %>% select(cols, -agency_name)
 ```
 

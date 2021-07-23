@@ -25,7 +25,7 @@ leso <- read_rds("data-processed/leso.rds")
 
 # columns of interest
 cols <- c(
-  "station_name_lea",
+  "agency_name",
   "item_name",
   "quantity",
   "ui",

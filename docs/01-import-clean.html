@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2021-01-25" />
+<meta name="date" content="2021-07-23" />
 
 <title>LESO data wrangling</title>
 
@@ -2847,7 +2847,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">LESO data wrangling</h1>
-<h4 class="date">2021-01-25</h4>
+<h4 class="date">2021-07-23</h4>
 
 </div>
 
@@ -2879,7 +2879,7 @@ library(janitor)</code></pre>
 <h2>Import</h2>
 <pre class="r"><code># set path to data
 ## change name to update to new file
-path &lt;- &quot;data-raw/DISP_AllStatesAndTerritories_12312020.xlsx&quot;
+path &lt;- &quot;data-raw/AllStatesAndTerritoriesQTR3FY21.xlsx&quot;
 
 # import and combine sheets
 leso &lt;- path %&gt;%
@@ -2889,7 +2889,7 @@ leso &lt;- path %&gt;%
 
 # peek at names
 leso %&gt;% names()</code></pre>
-<pre><code>##  [1] &quot;sheet&quot;             &quot;state&quot;             &quot;station_name_lea&quot; 
+<pre><code>##  [1] &quot;sheet&quot;             &quot;state&quot;             &quot;agency_name&quot;      
 ##  [4] &quot;nsn&quot;               &quot;item_name&quot;         &quot;quantity&quot;         
 ##  [7] &quot;ui&quot;                &quot;acquisition_value&quot; &quot;demil_code&quot;       
 ## [10] &quot;demil_ic&quot;          &quot;ship_date&quot;         &quot;station_type&quot;</code></pre>
@@ -2897,25 +2897,54 @@ leso %&gt;% names()</code></pre>
 leso %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["sheet"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["station_name_lea"],"name":[3],"type":["chr"],"align":["left"]},{"label":["nsn"],"name":[4],"type":["chr"],"align":["left"]},{"label":["item_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["quantity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ui"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acquisition_value"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["demil_code"],"name":[9],"type":["chr"],"align":["left"]},{"label":["demil_ic"],"name":[10],"type":["chr"],"align":["left"]},{"label":["ship_date"],"name":[11],"type":["dttm"],"align":["right"]},{"label":["station_type"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2355-01-553-4634","5":"MINE RESISTANT VEHICLE","6":"1","7":"Each","8":"658000","9":"C","10":"1","11":"2016-11-09","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-01-411-1265","5":"SIGHT,REFLEX","6":"9","7":"Each","8":"333","9":"D","10":"1","11":"2016-09-14","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1005-01-587-7175","5":"MOUNT,RIFLE","6":"10","7":"Each","8":"1626","9":"D","10":"1","11":"2016-09-19","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1385-01-574-4707","5":"UNMANNED VEHICLE,GROUND","6":"1","7":"Each","8":"10000","9":"Q","10":"3","11":"2017-03-28","12":"State"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sheet"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["agency_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["nsn"],"name":[4],"type":["chr"],"align":["left"]},{"label":["item_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["quantity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ui"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acquisition_value"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["demil_code"],"name":[9],"type":["chr"],"align":["left"]},{"label":["demil_ic"],"name":[10],"type":["chr"],"align":["left"]},{"label":["ship_date"],"name":[11],"type":["dttm"],"align":["right"]},{"label":["station_type"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1005-01-587-7175","5":"MOUNT,RIFLE","6":"10","7":"Each","8":"1626.00","9":"D","10":"1","11":"2016-09-19","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-01-411-1265","5":"SIGHT,REFLEX","6":"9","7":"Each","8":"333.00","9":"D","10":"1","11":"2016-09-14","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-DS-OPT-SIGH","5":"OPTICAL SIGHTING AND RANGING EQUIPMENT","6":"1","7":"Each","8":"245.88","9":"D","10":"NA","11":"2016-06-02","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1385-01-574-4707","5":"UNMANNED VEHICLE,GROUND","6":"1","7":"Each","8":"10000.00","9":"Q","10":"3","11":"2017-03-28","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627.00","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627.00","9":"C","10":"1","11":"2016-09-29","12":"State"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code># glimpse at df
 leso %&gt;% glimpse()</code></pre>
-<pre><code>## Rows: 133,949
+<pre><code>## Rows: 129,348
 ## Columns: 12
 ## $ sheet             &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;…
 ## $ state             &lt;chr&gt; &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL…
-## $ station_name_lea  &lt;chr&gt; &quot;ABBEVILLE POLICE DEPT&quot;, &quot;ABBEVILLE POLICE DEPT&quot;, &quot;…
-## $ nsn               &lt;chr&gt; &quot;2355-01-553-4634&quot;, &quot;1240-01-411-1265&quot;, &quot;2320-01-37…
-## $ item_name         &lt;chr&gt; &quot;MINE RESISTANT VEHICLE&quot;, &quot;SIGHT,REFLEX&quot;, &quot;TRUCK,UT…
-## $ quantity          &lt;dbl&gt; 1, 9, 1, 1, 10, 1, 10, 10, 1, 1, 1, 1, 10, 3, 12, 5…
+## $ agency_name       &lt;chr&gt; &quot;ABBEVILLE POLICE DEPT&quot;, &quot;ABBEVILLE POLICE DEPT&quot;, &quot;…
+## $ nsn               &lt;chr&gt; &quot;1005-01-587-7175&quot;, &quot;1240-01-411-1265&quot;, &quot;1240-DS-OP…
+## $ item_name         &lt;chr&gt; &quot;MOUNT,RIFLE&quot;, &quot;SIGHT,REFLEX&quot;, &quot;OPTICAL SIGHTING AN…
+## $ quantity          &lt;dbl&gt; 10, 9, 1, 1, 1, 1, 1, 10, 10, 1, 5, 10, 11, 10, 1, …
 ## $ ui                &lt;chr&gt; &quot;Each&quot;, &quot;Each&quot;, &quot;Each&quot;, &quot;Each&quot;, &quot;Each&quot;, &quot;Each&quot;, &quot;Ea…
-## $ acquisition_value &lt;dbl&gt; 658000.00, 333.00, 62627.00, 62627.00, 1626.00, 100…
-## $ demil_code        &lt;chr&gt; &quot;C&quot;, &quot;D&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;, &quot;Q&quot;, &quot;D&quot;, &quot;D&quot;, &quot;D&quot;, &quot;D&quot;, &quot;…
-## $ demil_ic          &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;3&quot;, &quot;1&quot;, &quot;1&quot;, NA, &quot;7&quot;, &quot;1…
-## $ ship_date         &lt;dttm&gt; 2016-11-09, 2016-09-14, 2016-09-29, 2016-09-29, 20…
+## $ acquisition_value &lt;dbl&gt; 1626.00, 333.00, 245.88, 10000.00, 62627.00, 62627.…
+## $ demil_code        &lt;chr&gt; &quot;D&quot;, &quot;D&quot;, &quot;D&quot;, &quot;Q&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;, &quot;D&quot;, &quot;D&quot;, &quot;…
+## $ demil_ic          &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, NA, &quot;3&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;7&quot;, &quot;1…
+## $ ship_date         &lt;dttm&gt; 2016-09-19, 2016-09-14, 2016-06-02, 2017-03-28, 20…
 ## $ station_type      &lt;chr&gt; &quot;State&quot;, &quot;State&quot;, &quot;State&quot;, &quot;State&quot;, &quot;State&quot;, &quot;State…</code></pre>
+<pre class="r"><code>leso %&gt;% summary()</code></pre>
+<pre><code>##     sheet              state           agency_name            nsn           
+##  Length:129348      Length:129348      Length:129348      Length:129348     
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##   item_name            quantity             ui            acquisition_value 
+##  Length:129348      Min.   :   0.000   Length:129348      Min.   :       0  
+##  Class :character   1st Qu.:   1.000   Class :character   1st Qu.:     138  
+##  Mode  :character   Median :   1.000   Mode  :character   Median :     499  
+##                     Mean   :   4.028                      Mean   :   13103  
+##                     3rd Qu.:   1.000                      3rd Qu.:     749  
+##                     Max.   :5000.000                      Max.   :22000000  
+##   demil_code          demil_ic           ship_date                  
+##  Length:129348      Length:129348      Min.   :1980-01-01 09:07:07  
+##  Class :character   Class :character   1st Qu.:2006-02-21 00:00:00  
+##  Mode  :character   Mode  :character   Median :2012-03-20 00:00:00  
+##                                        Mean   :2011-06-13 07:28:42  
+##                                        3rd Qu.:2016-11-03 00:00:00  
+##                                        Max.   :2021-06-30 00:00:00  
+##  station_type      
+##  Length:129348     
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## </code></pre>
 </div>
 <div id="texas" class="section level2">
 <h2>Texas</h2>

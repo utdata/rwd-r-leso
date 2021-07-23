@@ -43,7 +43,7 @@ library(janitor)
 ```{r import}
 # set path to data
 ## change name to update to new file
-path <- "data-raw/DISP_AllStatesAndTerritories_12312020.xlsx"
+path <- "data-raw/AllStatesAndTerritoriesQTR3FY21.xlsx"
 
 # import and combine sheets
 leso <- path %>%
@@ -53,10 +53,21 @@ leso <- path %>%
 
 # peek at names
 leso %>% names()
+```
+
+```{r peek}
 # peek at df
 leso %>% head()
+
+```
+
+```{r glimpse}
 # glimpse at df
 leso %>% glimpse()
+```
+
+```{r}
+leso %>% summary()
 ```
 
 ## Texas
