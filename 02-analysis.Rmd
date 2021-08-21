@@ -65,6 +65,7 @@ tx %>%
   count()
 ```
 
+
 ### Make a list of Austin MSA agencies
 
 This is a very suspect list because it comes from looking through the available agencies "by hand" from the Sept 2020 data.
@@ -94,7 +95,7 @@ aus_msa_list <- c(
   "PFLUGERVILLE POLICE DEPT",
   "SAN MARCOS POLICE DEPT",
   "TRAVIS COUNTY SHERIFFS OFFICE",
-  "NIV OF TEXAS SYSTEM POLICE HI_ED",
+  "UNIV OF TEXAS SYSTEM POLICE HI_ED",
   "WILLIAMSON COUNTY SHERIFF'S OFFICE"
 )
 
