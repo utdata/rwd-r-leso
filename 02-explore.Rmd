@@ -16,6 +16,7 @@ John Templon at Buzzfeed wondered why the acquisition_value was different for th
 
 ```{r setup, echo=T, results='hide', message=F, warning=F}
 library(tidyverse)
+library(lubridate)
 ```
 
 ## Import
@@ -34,6 +35,8 @@ cols <- c(
   "station_type"
   )
 ```
+
+
 
 ## Price differences
 
@@ -79,4 +82,59 @@ leso %>%
   count(demil_ic)
 ```
 
+
+## Controlled vs non-controlled property
+
+I thought there was a major data issue when numbers from two different data downloads until I read more about [controlled vs non-controlled property](https://www.dla.mil/dispositionservices//Offers/Reutilization/LawEnforcement/ProgramFAQs/#q6) on the [LESO Public Information page](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/PublicInformation/). Non-controlled items like boots or blankets (as opposed to guns) are removed from the database after a year, so there is a big drop in the number of records for recent years. Interesting, the number of records from past years does change over time, but not to the same degree. I have not explored those differences.
+
+Import two different downloads from about 6 months apart.
+
+```{r}
+leso_qtr1fy22 <- read_rds("data-processed/leso-qtr1fy22.rds")
+leso_qtr3fy21 <- read_rds("data-processed/leso-qtr3fy21.rds")
+
+```
+
+
+Newer data seems to have fewer records than the last update so I wondering why.
+
+Count records from the newer data
+
+```{r}
+leso_22 <- leso_qtr1fy22 %>% 
+  count(year = year(ship_date), name = "qtr1fy22") %>% 
+  arrange(year %>% desc()) %>% 
+  mutate(year = year %>% as.character())
+
+leso_22
+```
+
+Count records from older data
+
+```{r}
+leso_21 <- leso_qtr3fy21 %>% 
+  count(year = year(ship_date), name = "qtr3fy21") %>% 
+  arrange(year %>% desc()) %>% 
+  mutate(year =  year %>% as.character())
+
+leso_21
+```
+
+Join the two files together and calculate the difference in records
+
+```{r}
+leso_21 %>% 
+  left_join(leso_22) %>% 
+  mutate(diff = qtr1fy22 - qtr3fy21)
+```
+
+## exploring non-controlled property
+
+Unfortunately there is no way in the data to tell what is controlled or not.
+
+```{r}
+leso_qtr1fy22 %>% 
+  filter(year(ship_date) == 2021) %>% 
+  count(item_name, sort = T)
+```
 
