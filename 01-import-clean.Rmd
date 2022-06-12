@@ -11,6 +11,9 @@ output:
 knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
 ---
 
+> MOST RECENT DATA: March 31, 2022.
+
+
 This notebook processes [data](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/PublicInformation/) by the Defense Logistics Agency about military surplus transfers to local law enforcement through the Law Enforcement Support Office (LESO) or [LESO Program](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/).
 
 The data is updated quarterly. As of this date, the file name is linked from the headline "ALASKA - WYOMING AND US TERRITORIES".
@@ -45,7 +48,7 @@ library(janitor)
 ```{r import}
 # set path to data
 ## change name to update to new file
-path <- "data-raw/AllStatesAndTerritoriesQTR1FY22.xlsx"
+path <- "data-raw/AllStatesAndTerritoriesQTR2FY22.xlsx"
 
 # import and combine sheets
 leso <- path %>%
