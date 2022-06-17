@@ -17,6 +17,8 @@ John Templon at Buzzfeed wondered why the acquisition_value was different for th
 ```{r setup, echo=T, results='hide', message=F, warning=F}
 library(tidyverse)
 library(lubridate)
+library(readxl)
+library(janitor)
 ```
 
 ## Import
@@ -34,6 +36,8 @@ cols <- c(
   "ship_date",
   "station_type"
   )
+
+nsn_list <- read_excel("data-raw/nsn-extract-3-17-21.xlsx") |> clean_names()
 ```
 
 
@@ -128,13 +132,189 @@ leso_21 %>%
   mutate(diff = qtr1fy22 - qtr3fy21)
 ```
 
-## exploring non-controlled property
+## Exploring non-controlled property
 
-Unfortunately there is no way in the data to tell what is controlled or not.
+After exploring controlled vs non-controlled property, I corresponded with the DLA in June 2022.
+
+Question: Is there a way to tell from the data itself if the item is a controlled vs non-controlled item? I thought perhaps the DEMIL IC field with value of "A" might be non-controlled, but there seem to be items older than a year with that categorization that could be controlled and accurately remain, like RECON SCOUT XT,SPEC and AIRPLANE,CARGO-TRANSPORT.
+
+Answer: Property with the DEMIL codes A and Q6 are considered non-controlled general property and fall off the LESO property books after one year. All other Demil codes are considered controlled items and stay on the LESO property book until returned to DLA for disposition/disposal.
+
+Followup question: When you say Q6, do you mean a demil_code of "Q" combined with demil_ic of "6". Would other property with demil_code "Q" but with a demil_ic of other numbers not be controlled? Second question: In the 22Q2 data, there are a number of items older than a year (n = 62) that are DEMIL CODE A and DEMIL IC 1 and they do seem like big items that might be "controlled". Some examples: RECON SCOUT XT,SPEC (ALABAMA LAW ENFORCEMENT AGENCY, 2016-08-25) and AIRPLANE,CARGO-TRANSPORT (ARIZONA DEPT OF PUBLIC SAFETY, 2015-12-03, $17,000,000). I could see the argument for them to be controlled (though SEAT,AIRCRAFT might be a maybe on that).
+
+Followup answer: The general rule is that property coded A and Q6 (6 being the integrity code) falls off the LESO property book after one year. However, there are some exceptions. For instance, aircraft are always controlled regardless of the demil code. Also, LESO has the discretion to keep items as controlled despite the demil code. This happens with some high value items. The RECON SCOUT XT, SPEC example you cited was actually initially coded incorrectly because the wrong NSN was used when it was coded as A. Once the correct NSN was verified with the manufacturer, is was renamed and recoded as D. The next quarterly report will reflect the new name and code.
+
+So ... If we exclude non-controlled, we should keep aircraft.
+
+Exploring the `demil_code` as possible angle.
 
 ```{r}
-leso_qtr1fy22 %>% 
-  filter(year(ship_date) == 2021) %>% 
-  count(item_name, sort = T)
+leso |> 
+  count(demil_code)
+```
+
+Look at combination of demil_code and demil_ic (integrity code)
+
+```{r}
+leso |> 
+  count(demil_code, demil_ic)
+```
+
+
+Looking at [demil code docs](https://www.dla.mil/Working-With-DLA/Federal-and-International-Cataloging/DEMIL-Coding/DEMIL-Codes/) perhaps "A" is our value. (It is, as confirmed by DLA.)
+
+```{r}
+leso |> 
+  filter(demil_code == "A") |> 
+  count(item_name, acquisition_value)
+```
+
+This is looking reasonable.
+
+OK, are there any "Old" A records?
+
+```{r}
+leso |> 
+  filter(demil_code == "A") |> 
+  count(year(ship_date))
+```
+
+What are the old ones?
+
+```{r}
+old_controlled <- leso |> 
+  filter(
+    (demil_code == "A" | (demil_code == "Q" & demil_ic == 6)),
+    date(ship_date) < "2021-03-21"
+  ) |> 
+  select(state, agency_name, item_name, quantity, acquisition_value, demil_code, demil_ic, ship_date)
+
+old_controlled
+```
+
+smallest value?
+
+```{r}
+old_controlled |> 
+  filter(!(str_detect(item_name, "AIR"))) |> 
+  summarise(min(acquisition_value))
+
+old_controlled |> arrange(acquisition_value)
+```
+
+From this and discussions with the DLA we know this:
+
+- The RECON SCOUT XT,SPEC records are an error. They should've been classified as "D".
+- Anything with AIRCRAFT should be retained. This is why AIRPLANE,CARGO-TRANSPORT is still on the list. Probably why SEAT,AIRCRAFT is as well, though perhaps needlessly. 
+- Other 'high value" A/Q6 records might need to be retained. Maybe that is why TRUCK,STAKE and RECEIVER,INFRARED remain?
+
+Hoe does this compare to the most recent year (as of 22Q2).
+
+```{r}
+new_AQ6 <- leso |> 
+  filter(
+    (demil_code == "A" | (demil_code == "Q" & demil_ic == 6)),
+    date(ship_date) >= "2021-03-21"
+  ) |> 
+  select(state, agency_name, item_name, quantity, acquisition_value, demil_code, demil_ic, ship_date)
+
+new_AQ6
+```
+
+, 
+
+```{r}
+new_AQ6 |> 
+  filter(acquisition_value > 40000)
+```
+
+
+### Working out non-controlled exclusion
+
+As of right now, I would exclude these items like this:
+
+> This doesn't take aircraft or expensive items into account.
+
+```{r}
+non_controled_explore <- leso |> 
+  filter(
+    (demil_code == "A" | (demil_code == "Q" & demil_ic == 6))
+  ) |> 
+  select(agency_name, item_name, demil_code, demil_ic)
+
+non_controled_explore
+```
+
+## Controlled category
+
+A better way to handle might be to create a "controlled" category.
+
+Using case_when, it might go like this:
+
+- Mark anything with A or Q6 with "AIRPLANE" as controlled.
+- Mark anything with A or Q6 above $x as controlled (This is case-by-case so we can't code this)
+- Mark all other A, Q6 items as non-controlled
+- Mark everything else controlled.
+
+
+```{r}
+leso_control <- leso |> 
+  mutate(
+    control_type = case_when(
+      # airplane true
+      ((demil_code == "A" | (demil_code == "Q" & demil_ic == 6)) & str_detect(item_name, "AIRPLANE")) ~ T,
+      # Other A,Q6 false
+      (demil_code == "A" | (demil_code == "Q" & demil_ic == 6)) ~ F,
+      TRUE ~ T
+    )
+  )
+
+leso_control |> 
+  # filter(str_detect(item_name, "AIR")) |> 
+  filter((demil_code == "A" | (demil_code == "Q" & demil_ic == 6))) |> 
+  arrange(desc(acquisition_value)) |> 
+  select(item_name, demil_code, demil_ic, control_type, acquisition_value)
+
+```
+
+## Airplanes
+
+DLA said airplanes are always controlled. Let's look at names to find the best way to isolate them.
+
+It looks like "AIRPLANE" refers to the actual planes, and any related parts use the term "AIRCRAFT".
+
+```{r}
+leso |> 
+  filter(str_detect(item_name, "AIR")) |> 
+  count(item_name)
+```
+
+```{r}
+leso |> 
+  filter(str_detect(item_name, "HELI")) |> 
+  count(item_name, demil_code, demil_ic) |> 
+  arrange(demil_code, demil_ic)
+```
+
+
+
+## NSN exploration
+
+The list I have does not have many matches.
+
+```{r}
+leso |> 
+  glimpse()
+
+nsn_list |> glimpse()
+```
+
+
+
+```{r}
+leso |> 
+  left_join(nsn_list, by = "nsn") |> 
+  filter(!is.na(common_name))
+
 ```
 

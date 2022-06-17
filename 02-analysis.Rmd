@@ -58,23 +58,15 @@ austin_msa_agencies %>%
   arrange(agency)
 ```
 
-
-```{r stations}
-tx %>% 
-  group_by(agency_name) %>%
-  count()
-```
-
-
 ### Make a list of Austin MSA agencies
 
-This is a very suspect list because it comes from looking through the available agencies "by hand" from the Sept 2020 data.
+This is a very suspect list because it comes from looking through the available agencies "by hand" from the Sept 2020 data. If an item has `#nc` by it that means it has not beEN confirmed by a record in the LESO data and may not match. Does not look for public school districts.
 
-> Not yet checked to list above
 
 ```{r austinmsa}
 
 aus_msa_list <- c(
+  "AUSTIN PARKS POLICE DEPT", #NC
   "AUSTIN POLICE DEPT",
   "BASTROP COUNTY SHERIFF'S OFFICE",
   "BASTROP POLICE DEPT",
@@ -83,18 +75,35 @@ aus_msa_list <- c(
   "CALDWELL COUNTY SHERIFFS OFFICE",
   "CEDAR PARK POLICE DEPT",
   "ELGIN POLICE DEPARTMENT",
+  "FLORENCE POLICE DEPT", #NC
   "GEORGETOWN POLICE DEPT",
+  "GRANGER POLICE DEPT", #NC
   "HAYS CO CONSTABLE PRECINCT 4",
   "HAYS COUNTY SHERIFFS OFFICE",
   "HUTTO POLICE DEPT",
+  "JARRELL POLICE DEPT", #NC
+  "JONESTOWN POLICE DEPT", #NC
   "KYLE POLICE DEPT",
   "LAGO VISTA POLICE DEPT",
+  "LAKEWAY POLICE DEPT", #NC
   "LEANDER POLICE DEPT",
+  "LIBERTY HILL POLICE DEPT", #NC
+  "LOCKHART POLICE DEPT",
   "LULING POLICE DEPT",
   "MANOR POLICE DEPT",
+  "MARTINDALE POLICE DEPT", #NC
   "PFLUGERVILLE POLICE DEPT",
+  "ROLLINGWOOD POLICE DEPT", #NC
   "SAN MARCOS POLICE DEPT",
+  "SMITHVILLE POLICE DEPT", #NC
+  "SUNSET VALLEY POLICE DEPT", #NC
+  "TAYLOR POLICE DEPT", #NC
+  "THRALL POLICE DEPT", #NC
+  # TEXAS STATE UNIVERSITY HI_ED
   "TRAVIS COUNTY SHERIFFS OFFICE",
+  # TRAVIS CONSTABLE OFFICE,
+  # SOUTHWESTERN UNIVERSITY HI_ID
+  "WESTLAKE HILLS POLICE DEPT", #NC
   "UNIV OF TEXAS SYSTEM POLICE HI_ED",
   "WILLIAMSON COUNTY SHERIFF'S OFFICE"
 )
@@ -102,6 +111,17 @@ aus_msa_list <- c(
 aus_msa <- tx %>% 
   filter(agency_name %in% aus_msa_list)
 ```
+
+
+For running checks
+
+```{r stations}
+tx %>% 
+  group_by(agency_name) %>%
+  count() |> 
+  filter(str_detect(agency_name, "K-12"))
+```
+
 
 ### Austin MSA
 

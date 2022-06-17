@@ -11,8 +11,7 @@ output:
 knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
 ---
 
-> MOST RECENT DATA: March 31, 2022.
-
+> MOST RECENT DATA: March 31, 2022. MIGHT NEED CLEANING UPDATE WITH NEXT DATA UPDATE.
 
 This notebook processes [data](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/PublicInformation/) by the Defense Logistics Agency about military surplus transfers to local law enforcement through the Law Enforcement Support Office (LESO) or [LESO Program](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/).
 
@@ -20,20 +19,7 @@ The data is updated quarterly. As of this date, the file name is linked from the
 
 The spreadsheet has a a sheet for each state. This notebook puts all the sheets together into a single dataset for easier analysis.
 
-> An important note: In 2020 I asked the LESO office about the `acquisition_value` measure and found that it should be *multiplied* by the `quantity`. The value is for single item.
-
-In addition, I asked about why there are different prices for the same item, and received the following response on 2020-12-14:
-
-> You are correct, the NSN is the National Stock Number.
-> The primary reason a similar item has a different NSN designation is classification difference.  In some cases, this could be difference in features, a frequently added component to the item, or variance in storage requirements such as the recent vaccinees that are being assigned NSNs for DLA’s major subordinate command, Troop Support. 
-> The cost information is provided by the customer when they turn the items into DLA Disposition Services. Acquisition values can vary for numerous reasons. One is the above, variance in classification differences such as modifications. As with most commodities, other factors could include variance in acquisition cost depending on the quantity procured and the year acquired.
-
-**Also of note**: The most recent year includes "non-controlled" items like blankets and boots, which are removed after a year. This inflates counts for the most recent year of data.
-
-## Related data
-
-- Two values are considered [Demil Codes](https://www.dla.mil/HQ/LogisticsOperations/Services/FIC/DEMILCoding/DEMILCodes/) which note how an item must be tracked or destroyed?
-- There is also the `NSN` value, or [National Stock Number](https://www.dla.mil/AboutDLA/News/NewsArticleView/Article/1933320/what-is-a-national-stock-number/).
+There is some cleaning done here based on June 2022 research. See the README.
 
 ## Setup
 
@@ -75,15 +61,20 @@ leso %>% glimpse()
 leso %>% summary()
 ```
 
-## Texas
+## Clean up RECON SCOUT XT,SPEC
 
-Filter for Texas agencies
+Here we need to change any records that
 
-```{r texas}
-tx <- leso %>% 
-  filter(state == "TX")
-
+```{r}
+leso_cleaned <- leso |> 
+  mutate(
+    demil_code = case_when(
+      item_name == "RECON SCOUT XT,SPEC" ~ "D",
+      TRUE ~ demil_code
+    )
+  )
 ```
+
 
 ## Write files
 
@@ -92,10 +83,10 @@ Write files for export for future notebooks or other reasons.
 ```{r export}
 
 # write data to csv
-leso %>% 
+leso_cleaned %>% 
   write_csv("data-processed/leso.csv")
 
-leso %>% 
+leso_cleaned %>% 
   write_rds("data-processed/leso.rds")
 
 # leso %>%
