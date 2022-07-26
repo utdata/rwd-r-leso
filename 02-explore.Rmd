@@ -291,6 +291,12 @@ leso |>
 
 ```{r}
 leso |> 
+  filter(str_detect(item_name, "AIRPLANE"))
+```
+
+
+```{r}
+leso |> 
   filter(str_detect(item_name, "HELI")) |> 
   count(item_name, demil_code, demil_ic) |> 
   arrange(demil_code, demil_ic)
