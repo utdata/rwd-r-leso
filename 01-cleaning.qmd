@@ -1,0 +1,107 @@
+---
+title: "LESO wrangling"
+date: "`r Sys.Date()`"
+---
+
+::: callout-warning
+March 31, 2023 update. With each update, check the "Austin MSA agencies" in the analysis notebook.
+:::
+
+This notebook processes [data](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/PublicInformation/) by the Defense Logistics Agency about military surplus transfers to local law enforcement through the Law Enforcement Support Office (LESO) or [LESO Program](https://www.dla.mil/DispositionServices/Offers/Reutilization/LawEnforcement/).
+
+The data is updated quarterly. As of this date, the file name is linked from the headline "ALASKA - WYOMING AND US TERRITORIES".
+
+The spreadsheet has a a sheet for each state. This notebook puts all the sheets together into a single dataset for easier analysis.
+
+There is some cleaning done here based on June 2022 research. See the README.
+
+## Setup
+
+```{r setup, echo=T, results='hide', message=F, warning=F}
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+## Import
+
+```{r import}
+# set path to data
+## change name to update to new file
+path <- "data-raw/AllStatesAndTerritoriesQTR2FY23.xlsx"
+
+# import and combine sheets
+leso <- path %>%
+  excel_sheets() %>%
+  map_df(~ read_excel(path = path, sheet = .x), .id = "sheet") %>% 
+  clean_names()
+
+# peek at names
+leso %>% names()
+```
+
+```{r peek}
+# peek at df
+leso %>% head()
+
+```
+
+```{r glimpse}
+# glimpse at df
+leso %>% glimpse()
+```
+
+```{r}
+leso %>% summary()
+```
+
+## Clean up RECON SCOUT XT,SPEC
+
+At one point, I found a mistake in the data where a recon robit was not considered controlled. I questioned DLA about it and they said it was a mistake. I fixed it in that version of the data, but it isn't in the most recent version. It is worth checking.
+
+```{r}
+leso |> 
+  filter(str_detect(item_name, "RECON SCOUT")) |> 
+  count(item_name, demil_code)
+```
+
+If anything in that list shows up as `demil_code` "A" or "Q6" then it should be changed to "D".
+
+You can use the code below to change them. It's commented out for now. Update the export tibble if needed.
+
+```{r}
+# leso_fixed <- leso |> 
+#   mutate(
+#     demil_code = case_when(
+#       item_name == "RECON SCOUT XT,SPEC" ~ "D",
+#       TRUE ~ demil_code
+#     )
+#   )
+```
+
+
+## Some basic checks
+
+This just makes sure we didn't miss a bunch of states.
+
+```{r}
+leso |> 
+  count(state)
+```
+
+
+## Write files
+
+Write files for export for future notebooks or other reasons.
+
+```{r export}
+
+# write data to csv
+leso %>% 
+  write_csv("data-processed/leso.csv")
+
+leso %>% 
+  write_rds("data-processed/leso.rds")
+```
+
+
