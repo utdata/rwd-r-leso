@@ -1,0 +1,20 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "LESO data"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - 01-cleaning.qmd
+      - 02-analysis.qmd
+      - 02-explore.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    df-print: paged
