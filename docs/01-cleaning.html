@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-06-19">
+<meta name="dcterms.date" content="2023-07-25">
 
 <title>LESO data - LESO wrangling</title>
 <style>
@@ -90,7 +90,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -130,8 +131,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./02-analysis.html" rel="" target="">
  <span class="menu-text">LESO Texas and Austin</span></a>
   </li>  
-  <li class="dropdown-header">
- <span class="menu-text">03-explore.qmd</span></li>
+  <li class="nav-item">
+    <a class="nav-link" href="./02-explore.html" rel="" target="">
+ <span class="menu-text">LESO Explore</span></a>
+  </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
@@ -172,7 +175,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 19, 2023</p>
+      <p class="date">July 25, 2023</p>
     </div>
   </div>
   
@@ -212,7 +215,7 @@ Warning
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set path to data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## change name to update to new file</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"data-raw/AllStatesAndTerritoriesQTR2FY23.xlsx"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"data-raw/AllStatesAndTerritoriesQTR3FY23.xlsx"</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># import and combine sheets</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>leso <span class="ot">&lt;-</span> path <span class="sc">%&gt;%</span></span>
@@ -236,7 +239,7 @@ Warning
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["sheet"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["agency_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["nsn"],"name":[4],"type":["chr"],"align":["left"]},{"label":["item_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["quantity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ui"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acquisition_value"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["demil_code"],"name":[9],"type":["chr"],"align":["left"]},{"label":["demil_ic"],"name":[10],"type":["chr"],"align":["left"]},{"label":["ship_date"],"name":[11],"type":["dttm"],"align":["right"]},{"label":["station_type"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1385-01-574-4707","5":"UNMANNED VEHICLE,GROUND","6":"1","7":"Each","8":"10000.00","9":"Q","10":"3","11":"2017-03-28","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627.00","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2355-01-553-4634","5":"MINE RESISTANT VEHICLE","6":"1","7":"Each","8":"658000.00","9":"C","10":"1","11":"2016-11-09","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2540-01-565-4700","5":"BALLISTIC BLANKET KIT","6":"10","7":"Kit","8":"15871.59","9":"D","10":"1","11":"2018-01-30","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-01-411-1265","5":"SIGHT,REFLEX","6":"9","7":"Each","8":"371.00","9":"D","10":"1","11":"2016-09-14","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627.00","9":"C","10":"1","11":"2016-09-29","12":"State"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sheet"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["agency_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["nsn"],"name":[4],"type":["chr"],"align":["left"]},{"label":["item_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["quantity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ui"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acquisition_value"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["demil_code"],"name":[9],"type":["chr"],"align":["left"]},{"label":["demil_ic"],"name":[10],"type":["chr"],"align":["left"]},{"label":["ship_date"],"name":[11],"type":["dttm"],"align":["right"]},{"label":["station_type"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2355-01-553-4634","5":"MINE RESISTANT VEHICLE","6":"1","7":"Each","8":"658000.00","9":"C","10":"1","11":"2016-11-09","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1005-01-587-7175","5":"MOUNT,RIFLE","6":"10","7":"Each","8":"1626.00","9":"D","10":"1","11":"2016-09-19","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-01-411-1265","5":"SIGHT,REFLEX","6":"9","7":"Each","8":"371.00","9":"D","10":"1","11":"2016-09-14","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2540-01-565-4700","5":"BALLISTIC BLANKET KIT","6":"10","7":"Kit","8":"15871.59","9":"D","10":"1","11":"2018-01-30","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1385-01-574-4707","5":"UNMANNED VEHICLE,GROUND","6":"1","7":"Each","8":"10000.00","9":"Q","10":"3","11":"2017-03-28","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627.00","9":"C","10":"1","11":"2016-09-29","12":"State"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -245,19 +248,19 @@ Warning
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># glimpse at df</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>leso <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 107,670
+<pre><code>Rows: 99,152
 Columns: 12
 $ sheet             &lt;chr&gt; "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1…
 $ state             &lt;chr&gt; "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL"…
 $ agency_name       &lt;chr&gt; "ABBEVILLE POLICE DEPT", "ABBEVILLE POLICE DEPT", "A…
-$ nsn               &lt;chr&gt; "1385-01-574-4707", "2320-01-371-9584", "2355-01-553…
-$ item_name         &lt;chr&gt; "UNMANNED VEHICLE,GROUND", "TRUCK,UTILITY", "MINE RE…
-$ quantity          &lt;dbl&gt; 1, 1, 1, 10, 9, 1, 10, 1, 6, 1, 1, 1, 1, 3, 3, 10, 1…
+$ nsn               &lt;chr&gt; "2355-01-553-4634", "1005-01-587-7175", "1240-01-411…
+$ item_name         &lt;chr&gt; "MINE RESISTANT VEHICLE", "MOUNT,RIFLE", "SIGHT,REFL…
+$ quantity          &lt;dbl&gt; 1, 10, 9, 10, 1, 1, 1, 3, 1, 17, 10, 7, 6, 4, 4, 1, …
 $ ui                &lt;chr&gt; "Each", "Each", "Each", "Kit", "Each", "Each", "Each…
-$ acquisition_value &lt;dbl&gt; 10000.00, 62627.00, 658000.00, 15871.59, 371.00, 626…
-$ demil_code        &lt;chr&gt; "Q", "C", "C", "D", "D", "C", "D", "D", "D", "D", "D…
-$ demil_ic          &lt;chr&gt; "3", "1", "1", "1", "1", "1", "1", NA, NA, NA, NA, "…
-$ ship_date         &lt;dttm&gt; 2017-03-28, 2016-09-29, 2016-11-09, 2018-01-30, 201…
+$ acquisition_value &lt;dbl&gt; 658000.00, 1626.00, 371.00, 15871.59, 10000.00, 6262…
+$ demil_code        &lt;chr&gt; "C", "D", "D", "D", "Q", "C", "C", "D", "C", "A", "A…
+$ demil_ic          &lt;chr&gt; "1", "1", "1", "1", "3", "1", "1", "1", "1", "1", "1…
+$ ship_date         &lt;dttm&gt; 2016-11-09 00:00:00, 2016-09-19 00:00:00, 2016-09-1…
 $ station_type      &lt;chr&gt; "State", "State", "State", "State", "State", "State"…</code></pre>
 </div>
 </div>
@@ -265,28 +268,28 @@ $ station_type      &lt;chr&gt; "State", "State", "State", "State", "State", "St
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>leso <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    sheet              state           agency_name            nsn           
- Length:107670      Length:107670      Length:107670      Length:107670     
+ Length:99152       Length:99152       Length:99152       Length:99152      
  Class :character   Class :character   Class :character   Class :character  
  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
                                                                             
                                                                             
                                                                             
   item_name            quantity             ui            acquisition_value 
- Length:107670      Min.   :    0.00   Length:107670      Min.   :       0  
+ Length:99152       Min.   :    0.00   Length:99152       Min.   :       0  
  Class :character   1st Qu.:    1.00   Class :character   1st Qu.:     138  
  Mode  :character   Median :    1.00   Mode  :character   Median :     499  
-                    Mean   :    4.18                      Mean   :   14864  
-                    3rd Qu.:    1.00                      3rd Qu.:     885  
+                    Mean   :    4.09                      Mean   :   15910  
+                    3rd Qu.:    1.00                      3rd Qu.:     999  
                     Max.   :44000.00                      Max.   :22000000  
   demil_code          demil_ic           ship_date                     
- Length:107670      Length:107670      Min.   :1990-05-03 00:00:00.00  
- Class :character   Class :character   1st Qu.:2006-02-02 00:00:00.00  
- Mode  :character   Mode  :character   Median :2012-03-06 00:00:00.00  
-                                       Mean   :2011-05-11 02:13:15.14  
-                                       3rd Qu.:2016-03-24 00:00:00.00  
-                                       Max.   :2023-03-31 00:00:00.00  
+ Length:99152       Length:99152       Min.   :1990-05-03 00:00:00.00  
+ Class :character   Class :character   1st Qu.:2006-02-10 00:00:00.00  
+ Mode  :character   Mode  :character   Median :2012-03-20 00:00:00.00  
+                                       Mean   :2011-05-21 06:52:45.61  
+                                       3rd Qu.:2016-03-30 00:00:00.00  
+                                       Max.   :2023-06-30 06:06:28.00  
  station_type      
- Length:107670     
+ Length:99152      
  Class :character  
  Mode  :character  
                    
@@ -333,7 +336,7 @@ $ station_type      &lt;chr&gt; "State", "State", "State", "State", "State", "St
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["state"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"AK","2":"123"},{"1":"AL","2":"4511"},{"1":"AR","2":"1867"},{"1":"AZ","2":"2968"},{"1":"CA","2":"6547"},{"1":"CO","2":"1908"},{"1":"CT","2":"1041"},{"1":"DE","2":"191"},{"1":"FL","2":"3142"},{"1":"GA","2":"5094"},{"1":"GU","2":"113"},{"1":"IA","2":"944"},{"1":"ID","2":"796"},{"1":"IL","2":"5292"},{"1":"IN","2":"4033"},{"1":"KS","2":"580"},{"1":"KY","2":"3031"},{"1":"LA","2":"1763"},{"1":"MA","2":"831"},{"1":"MD","2":"1556"},{"1":"ME","2":"882"},{"1":"MI","2":"5637"},{"1":"MN","2":"3927"},{"1":"MO","2":"3455"},{"1":"MP","2":"72"},{"1":"MS","2":"691"},{"1":"MT","2":"671"},{"1":"NC","2":"1526"},{"1":"ND","2":"1246"},{"1":"NE","2":"237"},{"1":"NH","2":"443"},{"1":"NJ","2":"3137"},{"1":"NM","2":"199"},{"1":"NV","2":"667"},{"1":"NY","2":"921"},{"1":"OH","2":"6309"},{"1":"OK","2":"1481"},{"1":"OR","2":"673"},{"1":"PA","2":"1475"},{"1":"PR","2":"150"},{"1":"RI","2":"348"},{"1":"SC","2":"6910"},{"1":"SD","2":"687"},{"1":"TN","2":"4682"},{"1":"TX","2":"6655"},{"1":"UT","2":"687"},{"1":"VA","2":"2108"},{"1":"VI","2":"5"},{"1":"VT","2":"21"},{"1":"WA","2":"1013"},{"1":"WI","2":"2929"},{"1":"WV","2":"1101"},{"1":"WY","2":"394"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["state"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"AK","2":"144"},{"1":"AL","2":"4115"},{"1":"AR","2":"1743"},{"1":"AZ","2":"2776"},{"1":"CA","2":"5507"},{"1":"CO","2":"1735"},{"1":"CT","2":"990"},{"1":"DE","2":"188"},{"1":"FL","2":"2798"},{"1":"GA","2":"4676"},{"1":"GU","2":"110"},{"1":"IA","2":"910"},{"1":"ID","2":"782"},{"1":"IL","2":"5011"},{"1":"IN","2":"3796"},{"1":"KS","2":"568"},{"1":"KY","2":"2739"},{"1":"LA","2":"1652"},{"1":"MA","2":"785"},{"1":"MD","2":"1497"},{"1":"ME","2":"869"},{"1":"MI","2":"5517"},{"1":"MN","2":"3310"},{"1":"MO","2":"3296"},{"1":"MP","2":"72"},{"1":"MS","2":"675"},{"1":"MT","2":"676"},{"1":"NC","2":"1485"},{"1":"ND","2":"1179"},{"1":"NE","2":"203"},{"1":"NH","2":"428"},{"1":"NJ","2":"2774"},{"1":"NM","2":"199"},{"1":"NV","2":"666"},{"1":"NY","2":"840"},{"1":"OH","2":"5000"},{"1":"OK","2":"1429"},{"1":"OR","2":"652"},{"1":"PA","2":"1439"},{"1":"PR","2":"137"},{"1":"RI","2":"319"},{"1":"SC","2":"6289"},{"1":"SD","2":"661"},{"1":"TN","2":"4669"},{"1":"TX","2":"6336"},{"1":"UT","2":"537"},{"1":"VA","2":"2008"},{"1":"VI","2":"5"},{"1":"WA","2":"970"},{"1":"WI","2":"2615"},{"1":"WV","2":"1081"},{"1":"WY","2":"294"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
