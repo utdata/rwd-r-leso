@@ -28,7 +28,7 @@ library(janitor)
 ```{r import}
 # set path to data
 ## change name to update to new file
-path <- "data-raw/AllStatesAndTerritoriesQTR3FY23.xlsx"
+path <- "data-raw/AllStatesAndTerritoriesQTR4FY23.xlsx"
 
 # import and combine sheets
 leso <- path %>%
