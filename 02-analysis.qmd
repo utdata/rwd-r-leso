@@ -54,6 +54,7 @@ austin_msa_agencies %>%
 
 This is a very suspect list because it comes from looking through the available agencies "by hand" from the Sept 2020 data. If an item has `#NC` by it that means it has not been confirmed by a record in the LESO data and may not match. Does not look for public school districts.
 
+Last checked for new items in 04012024 release.
 
 ```{r austinmsa}
 
@@ -77,7 +78,7 @@ aus_msa_list <- c(
   "JONESTOWN POLICE DEPT", #NC
   "KYLE POLICE DEPT",
   "LAGO VISTA POLICE DEPT",
-  "LAKEWAY POLICE DEPT", #NC
+  "LAKEWAY POLICE DEPT", 
   "LEANDER POLICE DEPT",
   "LIBERTY HILL POLICE DEPT", #NC
   "LOCKHART POLICE DEPT",

@@ -43,57 +43,13 @@ Followup: Any chance there is a standard minimum value that represents "high val
   - I downloaded a [version of NSN](https://catalog.data.gov/dataset/national-stock-number-extract) in June 2022, saved as `data-raw/nsn-extract-3-17-21.xlsx`. It doesn't have many matches.
   - [Breaks down](https://www.dla.mil/AboutDLA/News/NewsArticleView/Article/1675036/dla-uses-national-stock-numbers-to-manage-supplies-efficiently-throughout-their/) NSN values.
   
-## Local agencies.
+## Local agencies
 
-The list as of 22Q2. List worked out in analysis notebook. See notes there. `#NC` is not confirmed.
-
-```r
-aus_msa_list <- c(
-  "AUSTIN PARKS POLICE DEPT", #NC
-  "AUSTIN POLICE DEPT",
-  "BASTROP COUNTY SHERIFF'S OFFICE",
-  "BASTROP POLICE DEPT",
-  "BEE CAVE POLICE DEPT",
-  "BUDA POLICE DEPT",
-  "CALDWELL COUNTY SHERIFFS OFFICE",
-  "CEDAR PARK POLICE DEPT",
-  "ELGIN POLICE DEPARTMENT",
-  "FLORENCE POLICE DEPT", #NC
-  "GEORGETOWN POLICE DEPT",
-  "GRANGER POLICE DEPT", #NC
-  "HAYS CO CONSTABLE PRECINCT 4",
-  "HAYS COUNTY SHERIFFS OFFICE",
-  "HUTTO POLICE DEPT",
-  "JARRELL POLICE DEPT", #NC
-  "JONESTOWN POLICE DEPT", #NC
-  "KYLE POLICE DEPT",
-  "LAGO VISTA POLICE DEPT",
-  "LAKEWAY POLICE DEPT", #NC
-  "LEANDER POLICE DEPT",
-  "LIBERTY HILL POLICE DEPT", #NC
-  "LOCKHART POLICE DEPT",
-  "LULING POLICE DEPT",
-  "MANOR POLICE DEPT",
-  "MARTINDALE POLICE DEPT", #NC
-  "PFLUGERVILLE POLICE DEPT",
-  "ROLLINGWOOD POLICE DEPT", #NC
-  "SAN MARCOS POLICE DEPT",
-  "SMITHVILLE POLICE DEPT", #NC
-  "SUNSET VALLEY POLICE DEPT", #NC
-  "TAYLOR POLICE DEPT", #NC
-  "THRALL POLICE DEPT", #NC
-  # TEXAS STATE UNIVERSITY HI_ED
-  "TRAVIS COUNTY SHERIFFS OFFICE",
-  # TRAVIS CONSTABLE OFFICE,
-  # SOUTHWESTERN UNIVERSITY HI_ID
-  "WESTLAKE HILLS POLICE DEPT", #NC
-  "UNIV OF TEXAS SYSTEM POLICE HI_ED",
-  "WILLIAMSON COUNTY SHERIFF'S OFFICE"
-)
-```
+See the analysis notebook for a list.
 
 ## Notebooks
 
-- [import-clean](01-cleaning.qmd) which loops through sheets in an Excel file.
+- [Clean](01-cleaning.qmd) which loops through sheets in an Excel file.
+- [Analysis](02-analysis.qmd) looks at some of the data and checks local agencies..
 
 
