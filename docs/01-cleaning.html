@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.542">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-07-25">
+<meta name="dcterms.date" content="2025-01-06">
 
-<title>LESO data - LESO wrangling</title>
+<title>LESO wrangling – LESO data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -70,16 +70,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dcc7d9e706e4adfbab8e3d6c7c60bab2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -108,49 +108,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">LESO data</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./01-cleaning.html" aria-current="page"> 
-<span class="menu-text">LESO wrangling</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./02-analysis.html"> 
-<span class="menu-text">LESO Texas and Austin</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./02-explore.html"> 
-<span class="menu-text">LESO Explore</span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-cleaning.html">LESO wrangling</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">LESO data</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-cleaning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">LESO wrangling</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LESO Texas and Austin</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-explore.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LESO Explore</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -181,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 25, 2024</p>
+      <p class="date">January 6, 2025</p>
     </div>
   </div>
   
@@ -223,16 +242,17 @@ Warning
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set path to data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## change name to update to new file</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"data-raw/AllStatesAndTerritories_04012024.xlsx"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># import and combine sheets</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>leso <span class="ot">&lt;-</span> path <span class="sc">%&gt;%</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">excel_sheets</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span> <span class="fu">read_excel</span>(<span class="at">path =</span> path, <span class="at">sheet =</span> .x), <span class="at">.id =</span> <span class="st">"sheet"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># peek at names</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>leso <span class="sc">%&gt;%</span> <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># path &lt;- "data-raw/AllStatesAndTerritories_04012024.xlsx"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"data-raw/DISP_AllStatesAndTerritories_07012024.xlsx"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># import and combine sheets</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>leso <span class="ot">&lt;-</span> path <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">excel_sheets</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span> <span class="fu">read_excel</span>(<span class="at">path =</span> path, <span class="at">sheet =</span> .x), <span class="at">.id =</span> <span class="st">"sheet"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># peek at names</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>leso <span class="sc">%&gt;%</span> <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "sheet"             "state"             "agency_name"      
  [4] "nsn"               "item_name"         "quantity"         
@@ -246,7 +266,7 @@ Warning
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["sheet"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["agency_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["nsn"],"name":[4],"type":["chr"],"align":["left"]},{"label":["item_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["quantity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ui"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acquisition_value"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["demil_code"],"name":[9],"type":["chr"],"align":["left"]},{"label":["demil_ic"],"name":[10],"type":["chr"],"align":["left"]},{"label":["ship_date"],"name":[11],"type":["dttm"],"align":["right"]},{"label":["station_type"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-01-411-1265","5":"SIGHT,REFLEX","6":"9","7":"Each","8":"365.00","9":"D","10":"1","11":"2016-09-14","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1005-01-587-7175","5":"MOUNT,RIFLE","6":"10","7":"Each","8":"1626.00","9":"D","10":"1","11":"2016-09-19","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627.00","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2355-01-553-4634","5":"MINE RESISTANT VEHICLE","6":"1","7":"Each","8":"658000.00","9":"C","10":"1","11":"2016-11-09","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1385-01-574-4707","5":"UNMANNED VEHICLE,GROUND","6":"1","7":"Each","8":"10000.00","9":"Q","10":"3","11":"2017-03-28","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2540-01-565-4700","5":"BALLISTIC BLANKET KIT","6":"10","7":"Kit","8":"16854.24","9":"D","10":"1","11":"2018-01-30","12":"State"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sheet"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["agency_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["nsn"],"name":[4],"type":["chr"],"align":["left"]},{"label":["item_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["quantity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ui"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acquisition_value"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["demil_code"],"name":[9],"type":["chr"],"align":["left"]},{"label":["demil_ic"],"name":[10],"type":["chr"],"align":["left"]},{"label":["ship_date"],"name":[11],"type":["dttm"],"align":["right"]},{"label":["station_type"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2540-01-565-4700","5":"BALLISTIC BLANKET KIT","6":"10","7":"Kit","8":"16854.24","9":"D","10":"1","11":"2018-01-30","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1385-01-574-4707","5":"UNMANNED VEHICLE,GROUND","6":"1","7":"Each","8":"10000.00","9":"Q","10":"3","11":"2017-03-28","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1005-01-587-7175","5":"MOUNT,RIFLE","6":"10","7":"Each","8":"1626.00","9":"D","10":"1","11":"2016-09-19","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"1240-01-411-1265","5":"SIGHT,REFLEX","6":"9","7":"Each","8":"365.00","9":"D","10":"1","11":"2016-09-14","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2320-01-371-9584","5":"TRUCK,UTILITY","6":"1","7":"Each","8":"62627.00","9":"C","10":"1","11":"2016-09-29","12":"State"},{"1":"1","2":"AL","3":"ABBEVILLE POLICE DEPT","4":"2355-01-553-4634","5":"MINE RESISTANT VEHICLE","6":"1","7":"Each","8":"658000.00","9":"C","10":"1","11":"2016-11-09","12":"State"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -255,19 +275,19 @@ Warning
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># glimpse at df</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>leso <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 93,460
+<pre><code>Rows: 95,056
 Columns: 12
 $ sheet             &lt;chr&gt; "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1…
 $ state             &lt;chr&gt; "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL"…
 $ agency_name       &lt;chr&gt; "ABBEVILLE POLICE DEPT", "ABBEVILLE POLICE DEPT", "A…
-$ nsn               &lt;chr&gt; "1240-01-411-1265", "1005-01-587-7175", "2320-01-371…
-$ item_name         &lt;chr&gt; "SIGHT,REFLEX", "MOUNT,RIFLE", "TRUCK,UTILITY", "MIN…
-$ quantity          &lt;dbl&gt; 9, 10, 1, 1, 1, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-$ ui                &lt;chr&gt; "Each", "Each", "Each", "Each", "Each", "Kit", "Each…
-$ acquisition_value &lt;dbl&gt; 365.00, 1626.00, 62627.00, 658000.00, 10000.00, 1685…
-$ demil_code        &lt;chr&gt; "D", "D", "C", "C", "Q", "D", "C", "D", "D", "D", "D…
-$ demil_ic          &lt;chr&gt; "1", "1", "1", "1", "3", "1", "1", "1", "1", "1", "1…
-$ ship_date         &lt;dttm&gt; 2016-09-14, 2016-09-19, 2016-09-29, 2016-11-09, 201…
+$ nsn               &lt;chr&gt; "2540-01-565-4700", "1385-01-574-4707", "1005-01-587…
+$ item_name         &lt;chr&gt; "BALLISTIC BLANKET KIT", "UNMANNED VEHICLE,GROUND", …
+$ quantity          &lt;dbl&gt; 10, 1, 10, 9, 1, 1, 1, 18, 1, 2, 3, 10, 1, 1, 2, 1, …
+$ ui                &lt;chr&gt; "Kit", "Each", "Each", "Each", "Each", "Each", "Each…
+$ acquisition_value &lt;dbl&gt; 16854.24, 10000.00, 1626.00, 365.00, 62627.00, 65800…
+$ demil_code        &lt;chr&gt; "D", "Q", "D", "D", "C", "C", "C", "Q", "Q", "Q", "Q…
+$ demil_ic          &lt;chr&gt; "1", "3", "1", "1", "1", "1", "1", "3", "3", "3", "3…
+$ ship_date         &lt;dttm&gt; 2018-01-30 00:00:00, 2017-03-28 00:00:00, 2016-09-1…
 $ station_type      &lt;chr&gt; "State", "State", "State", "State", "State", "State"…</code></pre>
 </div>
 </div>
@@ -275,28 +295,28 @@ $ station_type      &lt;chr&gt; "State", "State", "State", "State", "State", "St
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>leso <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    sheet              state           agency_name            nsn           
- Length:93460       Length:93460       Length:93460       Length:93460      
+ Length:95056       Length:95056       Length:95056       Length:95056      
  Class :character   Class :character   Class :character   Class :character  
  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
                                                                             
                                                                             
                                                                             
   item_name            quantity             ui            acquisition_value 
- Length:93460       Min.   :   1.000   Length:93460       Min.   :       0  
+ Length:95056       Min.   : -72.000   Length:95056       Min.   :       0  
  Class :character   1st Qu.:   1.000   Class :character   1st Qu.:     138  
  Mode  :character   Median :   1.000   Mode  :character   Median :     499  
-                    Mean   :   3.438                      Mean   :   16445  
-                    3rd Qu.:   1.000                      3rd Qu.:    1013  
+                    Mean   :   3.513                      Mean   :   16280  
+                    3rd Qu.:   1.000                      3rd Qu.:    1040  
                     Max.   :5000.000                      Max.   :22000000  
   demil_code          demil_ic           ship_date                     
- Length:93460       Length:93460       Min.   :1990-05-03 00:00:00.00  
- Class :character   Class :character   1st Qu.:2006-02-16 00:00:00.00  
- Mode  :character   Mode  :character   Median :2012-03-16 00:00:00.00  
-                                       Mean   :2011-06-17 07:18:29.92  
-                                       3rd Qu.:2016-04-19 00:00:00.00  
-                                       Max.   :2024-06-28 00:00:00.00  
+ Length:95056       Length:95056       Min.   :1990-05-03 00:00:00.00  
+ Class :character   Class :character   1st Qu.:2006-05-04 00:00:00.00  
+ Mode  :character   Mode  :character   Median :2012-04-02 00:00:00.00  
+                                       Mean   :2011-09-23 16:07:58.67  
+                                       3rd Qu.:2016-10-06 00:00:00.00  
+                                       Max.   :2024-09-28 00:00:00.00  
  station_type      
- Length:93460      
+ Length:95056      
  Class :character  
  Mode  :character  
                    
@@ -341,7 +361,7 @@ $ station_type      &lt;chr&gt; "State", "State", "State", "State", "State", "St
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["state"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"AK","2":"202"},{"1":"AL","2":"3932"},{"1":"AR","2":"1543"},{"1":"AZ","2":"2310"},{"1":"CA","2":"5139"},{"1":"CO","2":"1607"},{"1":"CT","2":"932"},{"1":"DE","2":"55"},{"1":"FL","2":"2464"},{"1":"GA","2":"3875"},{"1":"GU","2":"106"},{"1":"IA","2":"715"},{"1":"ID","2":"779"},{"1":"IL","2":"4841"},{"1":"IN","2":"3474"},{"1":"KS","2":"556"},{"1":"KY","2":"2861"},{"1":"LA","2":"1635"},{"1":"MA","2":"735"},{"1":"MD","2":"1385"},{"1":"ME","2":"854"},{"1":"MI","2":"5604"},{"1":"MN","2":"3047"},{"1":"MO","2":"3028"},{"1":"MP","2":"72"},{"1":"MS","2":"669"},{"1":"MT","2":"659"},{"1":"NC","2":"1497"},{"1":"ND","2":"1115"},{"1":"NE","2":"192"},{"1":"NH","2":"394"},{"1":"NJ","2":"2484"},{"1":"NM","2":"158"},{"1":"NV","2":"662"},{"1":"NY","2":"861"},{"1":"OH","2":"4938"},{"1":"OK","2":"1375"},{"1":"OR","2":"611"},{"1":"PA","2":"1540"},{"1":"PR","2":"92"},{"1":"RI","2":"267"},{"1":"SC","2":"5779"},{"1":"SD","2":"673"},{"1":"TN","2":"4218"},{"1":"TX","2":"6289"},{"1":"UT","2":"450"},{"1":"VA","2":"1989"},{"1":"VI","2":"5"},{"1":"WA","2":"973"},{"1":"WI","2":"2590"},{"1":"WV","2":"934"},{"1":"WY","2":"295"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["state"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"AK","2":"232"},{"1":"AL","2":"4047"},{"1":"AR","2":"1558"},{"1":"AZ","2":"2443"},{"1":"CA","2":"5293"},{"1":"CO","2":"1633"},{"1":"CT","2":"937"},{"1":"DE","2":"53"},{"1":"FL","2":"2499"},{"1":"GA","2":"3890"},{"1":"GU","2":"106"},{"1":"IA","2":"706"},{"1":"ID","2":"803"},{"1":"IL","2":"4890"},{"1":"IN","2":"3431"},{"1":"KS","2":"556"},{"1":"KY","2":"2860"},{"1":"LA","2":"1635"},{"1":"MA","2":"744"},{"1":"MD","2":"1388"},{"1":"ME","2":"823"},{"1":"MI","2":"5611"},{"1":"MN","2":"3214"},{"1":"MO","2":"3111"},{"1":"MP","2":"72"},{"1":"MS","2":"667"},{"1":"MT","2":"667"},{"1":"NC","2":"1546"},{"1":"ND","2":"1139"},{"1":"NE","2":"192"},{"1":"NH","2":"394"},{"1":"NJ","2":"2509"},{"1":"NM","2":"160"},{"1":"NV","2":"712"},{"1":"NY","2":"851"},{"1":"OH","2":"5073"},{"1":"OK","2":"1377"},{"1":"OR","2":"577"},{"1":"PA","2":"1661"},{"1":"PR","2":"91"},{"1":"RI","2":"265"},{"1":"SC","2":"5729"},{"1":"SD","2":"673"},{"1":"TN","2":"4418"},{"1":"TX","2":"6571"},{"1":"UT","2":"456"},{"1":"VA","2":"1936"},{"1":"VI","2":"5"},{"1":"WA","2":"1029"},{"1":"WI","2":"2577"},{"1":"WV","2":"951"},{"1":"WY","2":"295"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -398,18 +418,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -441,7 +450,45 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -476,7 +523,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -524,7 +575,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

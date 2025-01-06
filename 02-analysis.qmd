@@ -31,6 +31,11 @@ cols <- c(
 ```{r}
 leso %>% glimpse()
 ```
+Checking date range ...
+
+```{r}
+leso$ship_date |> summary()
+```
 
 
 ## Filter to TX

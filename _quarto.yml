@@ -1,18 +1,17 @@
 project:
   type: website
   output-dir: docs
-  render: 
-    - "*.qmd"
+  render:
+  - "01*.qmd"
+  - "*.qmd"
 
 website:
   title: "LESO data"
-  navbar:
-    left:
+  sidebar:
+    contents:
       - href: index.qmd
         text: Home
-      - 01-cleaning.qmd
-      - 02-analysis.qmd
-      - 02-explore.qmd
+      - auto: "*.qmd"
 
 format:
   html:
@@ -20,3 +19,4 @@ format:
     css: styles.css
     toc: true
     df-print: paged
+    code-overflow: wrap
