@@ -30,7 +30,7 @@ cols <- c(
   "station_type"
   )
 
-nsn_list <- read_excel("data-raw/nsn-extract-3-17-21.xlsx") |> clean_names()
+nsn_list <- read_excel("data-original/nsn-extract-3-17-21.xlsx") |> clean_names()
 ```
 
 

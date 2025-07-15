@@ -2,6 +2,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/r,microsoftoffice,macos,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=r,microsoftoffice,macos,windows
 
+## Added for quarto
+/.quarto/
+/_site/
+
 ### macOS ###
 # General
 .DS_Store

@@ -13,7 +13,7 @@ library(tidyverse)
 
 ```{r import}
 leso <- read_rds("data-processed/leso.rds")
-austin_msa_agencies <- read_csv("data-raw/austin_msa_agencies.csv")
+austin_msa_agencies <- read_csv("data-original/austin_msa_agencies.csv")
 
 cols <- c(
   "agency_name",
