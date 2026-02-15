@@ -93,7 +93,7 @@ aus_msa_list <- c(
   "PFLUGERVILLE POLICE DEPT",
   "ROLLINGWOOD POLICE DEPT", #NC
   "SAN MARCOS POLICE DEPT",
-  "SMITHVILLE POLICE DEPT", #NC
+  "SMITHVILLE POLICE DEPT",
   "SUNSET VALLEY POLICE DEPT", #NC
   "TAYLOR POLICE DEPT", #NC
   "THRALL POLICE DEPT", #NC
@@ -157,7 +157,7 @@ wilco %>%
 
 ## Texas higher education
 
-Look for K-12 and HI_ED
+Look for HI_ED
 
 ```{r}
 tx %>% 
@@ -188,27 +188,5 @@ tx %>%
 
 ```
 
-### Spring Branch
 
-```{r}
-tx %>% 
-  filter(
-    agency_name == "SPRING BRANCH ISD PD K-12"
-  ) %>% 
-  group_by(item_name) %>% 
-  summarise(
-    cnt = sum(quantity),
-    total_value = sum(quantity * acquisition_value)
-  )
-```
-
-Checking pistol
-
-```{r}
-tx %>% 
-  filter(
-    agency_name == "SPRING BRANCH ISD PD K-12",
-    item_name == "PISTOL,CALIBER .45,AUTOMATIC"
-  ) %>% select(cols, -agency_name)
-```
 
